@@ -1,6 +1,6 @@
 require 'bundler'
 require 'colored'
-# require 'vnehm/ui'
+require 'vnehm/ui'
 require 'rake'
 
 Bundler::GemHelper.install_tasks
@@ -11,9 +11,9 @@ file = 'pkg/vnehm-' + Vnehm::VERSION + '.gem'
 ##
 # Push to rubygems
 
-#task :push => :build do
-#  `gem push #{file}`
-#end
+task :push => :build do
+  `gem push #{file}`
+end
 
 ##
 # Add command with boilerplate code

@@ -9,8 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors = ['Albert Nigmatzianov']
   spec.email   = ['albertnigma@gmail.com']
 
-  spec.summary     = 'Convenient way to download music (also to iTunes) from VKontakte via terminal'
-  spec.description = 'vnehm is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your VKontakte music in convenient way. See homepage for instructions'
+  spec.summary     = 'Convenient way to download tracks (and add to iTunes) from VKontakte via terminal'
+  spec.description = 'vnehm - это консольная утилита, которая скачивает (и добавляет в Вашу библиотеку iTunes) аудиозаписи из ВКонтакте
+'
   spec.homepage    = 'http://www.github.com/bogem/vnehm'
   spec.license     = 'MIT'
 
@@ -18,8 +19,8 @@ Gem::Specification.new do |spec|
   spec.bindir                = 'bin'
   spec.executables           = 'vnehm'
   spec.require_paths         = ['lib']
-  spec.required_ruby_version = '>= 1.9.3'
-  spec.post_install_message  = "Don't forget to install Taglib from OS' package manager!"
+  spec.required_ruby_version = '>= 2.0.0'
+  spec.post_install_message  = 'Не забудьте установить Taglib из пакетного менеджера Вашей ОС!'
 
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'

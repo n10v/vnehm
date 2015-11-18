@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+vnehm_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(vnehm_dir) unless $LOAD_PATH.include?(vnehm_dir)
+require 'vnehm'
+
+$stderr = STDOUT
+
+begin
+  Vnehm.start(ARGV)
+rescue Interrupt # SIGINT
+  Vnehm::UI.term
+# rescue StandardError, Timeout::Error => ex
+#   Vnehm::UI.term "While executing vnehm ... (#{ex.class})\n    #{ex}"
+end

@@ -14,7 +14,6 @@ module Vnehm
   class VnehmExit < SystemExit; end
 
   def self.start(args)
-
     begin
       init unless initialized?
 
@@ -39,7 +38,7 @@ module Vnehm
   #{'dl'.green}         Загрузка Ваших аудиозаписей из VK
   #{'configure'.green}  Настройка приложения
   #{'help'.green}       Показ справки для определенной команды
-  #{'list'.green}     Вывод списка Ваших аудиозаписей из VK и загрузка выбранных треков
+  #{'list'.green}       Вывод списка Ваших аудиозаписей из VK и загрузка выбранных треков
   #{'search'.green}     Поиск, вывод и загрузка определенных аудиозаписей по запросу
   #{'version'.green}    Вывод версии приложения
 

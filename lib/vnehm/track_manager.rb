@@ -62,16 +62,6 @@ module Vnehm
     end
 
     def setup_environment(options)
-      # Setting up user id
-      permalink = options[:from]
-      @uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
-      unless @uid
-        UI.error "You didn't logged in"
-        UI.say "Login from #{'nehm configure'.yellow} " \
-               "or use #{'[from PERMALINK]'.yellow} option"
-        UI.term
-      end
-
       # Setting up download path
       temp_path = options[:to]
       dl_path = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path

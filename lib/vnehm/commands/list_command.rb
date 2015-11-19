@@ -6,7 +6,7 @@ module Vnehm
   # This command gets likes/posts from user's account,
   # Prints as menu, and downloads selected tracks
 
-  class SelectCommand < TracksViewCommand
+  class ListCommand < TracksViewCommand
 
     def initialize
       super
@@ -29,11 +29,11 @@ module Vnehm
     end
 
     def program_name
-      'vnehm select'
+      'vnehm list'
     end
 
     def summary
-      'Вывод ваших аудиозаписей из VK и загрузка выбранных треков'
+      'Вывод списка ваших аудиозаписей из VK и загрузка выбранных треков'
     end
 
     def usage

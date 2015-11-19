@@ -14,8 +14,8 @@ module Vnehm
       :dl,
       :get,
       :help,
+      :list,
       :search,
-      :select,
       :version
     ]
 

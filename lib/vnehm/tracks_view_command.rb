@@ -42,7 +42,7 @@ module Vnehm
 
     def show_menu(tracks)
       UI.menu do |menu|
-        menu.header = 'Введите номер аудиозаписи, чтобы добавить в очередь'.green
+        menu.header = 'Введите номер аудиозаписи, чтобы добавить её в очередь'.green
 
         ids = @queue.map(&:id) # Get ids of tracks in queue
         tracks.each do |track|

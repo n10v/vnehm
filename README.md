@@ -2,6 +2,10 @@
 
 *vnehm* - это консольная утилита, которая скачивает (и добавляет в Вашу библиотеку iTunes) аудиозаписи из ВКонтакте
 
+[![Gem Version](https://img.shields.io/gem/v/vnehm.svg)](https://rubygems.org/gems/vnehm)
+[![Code Climate](https://img.shields.io/codeclimate/github/bogem/vnehm.svg)](https://codeclimate.com/github/bogem/vnehm)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bogem/vnehm/blob/master/LICENSE)
+
 ## ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ
 
 ***Используйте эту программу только для личного пользования***

@@ -17,7 +17,7 @@ module Vnehm
         @playlist.add_track(track) if @playlist
         UI.newline
       end
-      UI.success 'Done!'
+      UI.success 'Готово!'
     end
 
     def tracks(limit, offset)

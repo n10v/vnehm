@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
   spec.executables           = 'vnehm'
   spec.require_paths         = ['lib']
   spec.required_ruby_version = '>= 2.0.0'
-  spec.post_install_message  = 'Не забудьте установить Taglib из пакетного менеджера Вашей ОС!'
 
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'

@@ -23,7 +23,7 @@ module Vnehm
       tracks =
         case arg
           when /^\d$/ # If arg is number
-            track_manager.tracks(arg, 0)
+            track_manager.tracks(arg.to_i, 0)
           when nil
             track_manager.tracks(*FIRST_TRACK)
           else

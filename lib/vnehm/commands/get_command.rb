@@ -1,3 +1,5 @@
+require 'vnehm/track_manager'
+
 module Vnehm
   class GetCommand < Command
 

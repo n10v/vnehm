@@ -6,7 +6,6 @@ require 'vnehm/command_manager'
 require 'vnehm/os'
 require 'vnehm/path_manager'
 require 'vnehm/playlist_manager'
-require 'vnehm/track_manager'
 require 'vnehm/ui'
 
 module Vnehm

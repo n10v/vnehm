@@ -5,10 +5,4 @@ require 'vnehm'
 
 $stderr = STDOUT
 
-begin
-  Vnehm.start(ARGV)
-rescue Interrupt # SIGINT
-  Vnehm::UI.term
-# rescue StandardError, Timeout::Error => ex
-#   Vnehm::UI.term "While executing vnehm ... (#{ex.class})\n    #{ex}"
-end
+Vnehm.start(ARGV)

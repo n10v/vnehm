@@ -13,8 +13,19 @@ module Vnehm
     # Checks path for validation and returns it if valid
 
     def self.get_path(path)
-      # Check path for existence
-      UI.term 'Такой папки не существует! Пожалуйста, введите корректный путь' unless Dir.exist?(path)
+      unless Dir.exist?(path)
+        UI.warning 'Такой директории не существует'
+        wish = UI.ask('Хотите создать её? (Y/n):')
+        wish = 'y' if wish == ''
+
+        if wish.downcase =~ /y/
+          UI.say "Создание директории: #{path}"
+          UI.newline
+          Dir.mkdir(File.expand_path(path), 0775)
+        else
+          UI.term
+        end
+      end
 
       File.expand_path(path)
     end

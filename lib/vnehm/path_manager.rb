@@ -14,7 +14,7 @@ module Vnehm
 
     def self.get_path(path)
       unless Dir.exist?(path)
-        UI.warning 'Такой директории не существует'
+        UI.warning "Директории #{path} не существует"
         wish = UI.ask('Хотите создать её? (Y/n):')
         wish = 'y' if wish == ''
 

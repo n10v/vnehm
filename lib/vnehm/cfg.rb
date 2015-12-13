@@ -3,7 +3,7 @@ require 'yaml'
 module Vnehm
 
   ##
-  # Cfg module manipulates with nehm's config file (~/.vnehmconfig)
+  # Cfg module manipulates with vnehm's config file (~/.vnehmconfig)
 
   module Cfg
 

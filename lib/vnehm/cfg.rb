@@ -34,7 +34,7 @@ module Vnehm
 
     def config_hash
       @config_hash ||= YAML.load_file(FILE_PATH)
-      @config_hash ||= {} unless @config_hash
+      @config_hash ||= {}
 
       @config_hash
     end

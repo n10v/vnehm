@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-vnehm_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(vnehm_dir) unless $LOAD_PATH.include?(vnehm_dir)
-require 'vnehm'
-
-$stderr = STDOUT
-
-Vnehm.start(ARGV)

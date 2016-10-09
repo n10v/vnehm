@@ -1,88 +1,100 @@
-# vnehm
+<div align="center">
+<p><b><i>vnehm</i></b> is a console tool, which downloads and adds to your iTunes library (if you use macOS) your <b>VK</b> audios in convenient way.</p>
 
-*vnehm* - это консольная утилита, которая скачивает (и добавляет в Вашу библиотеку iTunes) аудиозаписи из ВКонтакте
+<div align="center">
+<a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/list.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/list.thumb.png" alt="List"></img></a>
+<a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/get.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/get.thumb.png" alt="List"></img></a>
+<a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/search.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/search.thumb.png" alt="List"></img></a>
+<a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/help.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/help.thumb.png" alt="List"></img></a>
+<p><b>(click to zoom)</b></p>
+</div>
 
-[![Gem Version](https://img.shields.io/gem/v/vnehm.svg)](https://rubygems.org/gems/vnehm)
-[![Code Climate](https://img.shields.io/codeclimate/github/bogem/vnehm.svg)](https://codeclimate.com/github/bogem/vnehm)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bogem/vnehm/blob/master/LICENSE)
+---
 
-## ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ
+<div align="center">
+<h2>DISCLAIMER</h2>
+<b><i><p>For personal use only</p>
+vnehm developer doesn't responsible for any illegal usage of this program</i></b>
+</div>
 
-***Используйте эту программу только для личного пользования***
+---
 
-***Разработчик vnehm не несет ответственности за любое нелегальное использование данной программы***
+## Description
+`vnehm` is a console tool written in `Go`. It can download your VK audios and add to iTunes, **if you use `macOS`**.
 
-## Установка
+`vnehm` *wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
 
-**1. [Установите Ruby](https://www.ruby-lang.org/ru/downloads/)**
+***If you have ideas to improve `vnehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `vnehm`, don't hesitate to write an issue. I will answer as soon as possible.***
 
-**2. Установите библиотеку `taglib`**
+## Installation
+Install via `go` command:
 
-**Для Mac OS X:**
+	$ go get -u github.com/bogem/vnehm
 
-`brew install taglib`
+or you can download and install binary from [latest release](https://github.com/bogem/vnehm/releases).
 
-or
+## Configuration
+First of all, you should configure `vnehm`:
 
-`sudo port install taglib`
+1. Create a file `.vnehmconfig` in your home directory
 
-**Для Linux:**
+2. Write in it configuration, i.e. set three variables in YAML format:
 
-Debian/Ubuntu: `sudo apt-get install libtag1-dev`
+`dlFolder` - filesystem path to download folder, where will be downloaded all tracks,
 
-Fedora/RHEL: `sudo yum install taglib-devel`
+`itunesPlaylist` - name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
 
-**3. Установите `vnehm`**
-
-`gem install vnehm`
-
-## Перед использованием
-
-Если Вы только что установили `vnehm`, введите любую команду для первоначальной инициализации
-
-Например, `vnehm help`
-
-`vnehm` должен ответить примерно так:
+#### Example:
 ```
-Прежде чем использовать vnehm, Вам нужно его настроить
-Введите путь в желаемую директорию скачиваемых аудио...
+dlFolder: /Users/bogem/Music
+itunesPlaylist: iPod
 ```
-А дальше следуйте инструкциям, которые вам предложит `vnehm`
 
-## Примеры использования
+3. Execute `vnehm auth` to authorize.
 
-Используйте `vnehm help` для списка всех доступных команд или `vnehm help КОМАНДА` для определенной команды
+Don't worry if you become the message, what you mustn't copy the link from address bar. This app is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which have vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.
 
-Команды и аргументы (но **НЕ** опции) могут быть сокращены, насколько они могут быть однозначны
+## Usage Examples
 
-#### Скачать в директорию по умолчанию и добавить в iTunes Вашу последнюю аудиозапись
+Type `vnehm help` to list of all available commands or `vnehm help COMMAND` for specific command.
 
-  `$ vnehm get` = `$ vnehm g`
+Also commands may be abbreviated to one symbol length. For example, you can input `vnehm s` instead of `vnehm search`.
 
-#### Скачать и добавить в iTunes несколько последних аудиозаписей
+#### Get list of audios and download selected
 
-  `$ vnehm get 3` = `$ vnehm g 3`
+	$ vnehm
 
-#### Просто скачать аудиозапись
+#### Download last audio
 
-  `$ vnehm dl` = `$ vnehm d`
+	$ vnehm get
 
-#### Скачать аудиозапись в другую директорию
+#### Download last 3 audios
 
-  `$ vnehm g to ~/Downloads` or `$ vnehm d to .`
+	$ vnehm get 3
 
-#### Скачать и добавить трек в другой плейлист iTunes
+#### Download second audio and don't add it to iTunes playlist
 
-  `$ vnehm g pl MyPlaylist`
+	$ vnehm get -o 1 -i ''
 
-#### Вывести список Ваших аудиозаписей и скачать выбранные
+#### Search for audios and download them
 
-  `$ vnehm list` = `$ vnehm l`
+	$ vnehm search nasa
 
-#### Найти треки по запросу и скачать выбранные
+## FAQ
 
-  `$ vnehm search kanye west` = `$ vnehm s kanye west`
+**Q: How can I add track to iTunes' music library, but not to any playlist?**
 
-## Лицензия
+**A:** It depends on language you're using on your Mac. The name of your iTunes' music library you can see here:
+
+![iTunes music master library](https://raw.github.com/bogem/vnehm/master/Pictures/music_master_library.png)
+
+For example, english users should use `vnehm get -i Music`, russian users - `vnehm get -i Музыка`.
+
+## TODO
+- [ ] Make tests
+- [ ] Upload to `homebrew`
+- [ ] Use built-in downloader instead of `curl`
+
+## License
 
 MIT

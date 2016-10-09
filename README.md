@@ -1,7 +1,7 @@
 <div align="center">
+<h1>vnehm</h1>
 <p><b><i>vnehm</i></b> is a console tool, which downloads and adds to your iTunes library (if you use macOS) your <b>VK</b> audios in convenient way.</p>
 
-<div align="center">
 <a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/list.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/list.thumb.png" alt="List"></img></a>
 <a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/get.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/get.thumb.png" alt="List"></img></a>
 <a href="https://raw.githubusercontent.com/bogem/vnehm/master/Pictures/search.png" target="_blank"><img src="https://raw.github.com/bogem/vnehm/master/Pictures/search.thumb.png" alt="List"></img></a>
@@ -36,21 +36,21 @@ or you can download and install binary from [latest release](https://github.com/
 ## Configuration
 First of all, you should configure `vnehm`:
 
-1. Create a file `.vnehmconfig` in your home directory
+* **Create a file `.vnehmconfig` in your home directory**
 
-2. Write in it configuration, i.e. set three variables in YAML format:
+* **Write in it configuration, i.e. set three variables in YAML format:**
 
 `dlFolder` - filesystem path to download folder, where will be downloaded all tracks,
 
 `itunesPlaylist` - name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
 
-#### Example:
+Example:
 ```
 dlFolder: /Users/bogem/Music
 itunesPlaylist: iPod
 ```
 
-3. Execute `vnehm auth` to authorize.
+* **Execute `vnehm auth` to authorize**
 
 Don't worry if you become the message, what you mustn't copy the link from address bar. This app is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which have vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.
 

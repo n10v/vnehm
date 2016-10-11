@@ -15,22 +15,24 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/bogem/vnehm/applescript"
-	"github.com/bogem/vnehm/ui"
-	"github.com/bogem/vnehm/util"
+	"github.com/bogem/nehm/applescript"
+	"github.com/bogem/nehm/ui"
+	"github.com/bogem/nehm/util"
 )
 
 var (
 	override = make(map[string]string)
 	config   = make(map[string]string)
 
-	configPath = path.Join(os.Getenv("HOME"), ".vnehmconfig")
+	configPath = path.Join(os.Getenv("HOME"), ".nehmconfig")
 	configRead bool
 )
 
 // Get has the behavior of returning the value associated with the first
 // place from where it is set. Get will check value in the following order:
 // flag, config file.
+//
+// Get returns a string. For a specific value you can use one of the Get____ methods.
 func Get(key string) string {
 	if value, exists := override[key]; exists {
 		return value
@@ -54,15 +56,26 @@ func read() {
 	if err != nil {
 		ui.Term("Couldn't open the config file", err)
 	}
+	defer configFile.Close()
 
-	configBytes, err := ioutil.ReadAll(configFile)
+	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
 		ui.Term("Couldn't read the config file", err)
 	}
 
-	if err := yaml.Unmarshal(configBytes, config); err != nil {
+	if err := yaml.Unmarshal(configData, config); err != nil {
 		ui.Term("Couldn't unmarshal the config file", err)
 	}
+}
+
+// GetPermalink returns the value associated with the key "permalink".
+// It guarantees that will be returned non-blank string.
+func GetPermalink() string {
+	permalink := Get("permalink")
+	if permalink == "" {
+		ui.Term("You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.", nil)
+	}
+	return permalink
 }
 
 // GetPermalink returns the value associated with the key "dlFolder".
@@ -90,7 +103,10 @@ func GetItunesPlaylist() string {
 			return playlist
 		}
 
-		playlistsList := applescript.ListOfPlaylists()
+		playlistsList, err := applescript.ListOfPlaylists()
+		if err != nil {
+			ui.Term("Couldn't get list of playlists", err)
+		}
 		if !strings.Contains(playlistsList, playlist) {
 			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
 		}
@@ -98,46 +114,7 @@ func GetItunesPlaylist() string {
 	return playlist
 }
 
-// GetToken returns the value associated with the key "token".
-func GetToken() string {
-	token := Get("token")
-	if token == "" {
-		ui.Term("You aren't authorized. Please execute `vnehm auth` command to authorize.", nil)
-	}
-	return token
-}
-
 // Set sets the value for the key in the override regiser.
 func Set(key, value string) {
 	override[key] = value
-}
-
-// Write appends key and value to config file.
-func Write(key, value string) {
-	config[key] = value
-
-	configFile, err := os.OpenFile(configPath, os.O_WRONLY, os.ModePerm)
-	if os.IsNotExist(err) {
-		configFile, err = os.Create(configPath)
-		if err != nil {
-			ui.Term("Couldn't create the config file", err)
-		}
-		err = nil
-	}
-	if err != nil {
-		ui.Term("Couldn't open the config file", err)
-	}
-	defer configFile.Close()
-
-	read()
-
-	configBytes, err := yaml.Marshal(config)
-	if err != nil {
-		ui.Term("Coudn't marshal the config map", err)
-	}
-
-	_, err = configFile.Write(configBytes)
-	if err != nil {
-		ui.Term("Couldn't write to the config file", err)
-	}
 }

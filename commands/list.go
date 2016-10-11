@@ -31,6 +31,8 @@ func init() {
 func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
+	tp := tracksprocessor.NewConfiguredTracksProcessor()
+
 	tm := ui.TracksMenu{
 		GetTracks: listGetTracks,
 		Limit:     limit,
@@ -38,7 +40,7 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	}
 	downloadTracks := tm.Show()
 
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
+	tp.ProcessAll(downloadTracks)
 }
 
 func listGetTracks(offset uint) ([]track.Track, error) {

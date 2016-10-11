@@ -34,6 +34,8 @@ func init() {
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
+	tp := tracksprocessor.NewConfiguredTracksProcessor()
+
 	searchQuery = strings.Join(args, " ")
 
 	tm := ui.TracksMenu{
@@ -42,7 +44,7 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	}
 	downloadTracks := tm.Show()
 
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
+	tp.ProcessAll(downloadTracks)
 }
 
 func searchGetTracks(offset uint) ([]track.Track, error) {

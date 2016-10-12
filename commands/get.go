@@ -49,14 +49,14 @@ func getTracks(cmd *cobra.Command, args []string) {
 			handleError(err)
 		}
 	} else {
-		ui.Term("You've entered invalid argument. Run 'nehm get --help' for usage.", nil)
+		ui.Term("You've entered invalid argument. Run 'vnehm get --help' for usage.", nil)
 	}
 
 	tp.ProcessAll(downloadTracks)
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
-	return client.Audios(count, offset, config.GetToken())
+	return client.Audios(count, offset, config.Get("token"))
 }
 
 func handleError(err error) {

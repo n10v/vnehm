@@ -48,5 +48,5 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 }
 
 func searchGetTracks(offset uint) ([]track.Track, error) {
-	return client.Search(limit, offset, searchQuery, config.GetToken())
+	return client.Search(limit, offset, searchQuery, config.Get("token"))
 }

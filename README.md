@@ -40,9 +40,11 @@ First of all, you should configure `vnehm`:
 
 * **Write in it configuration, i.e. set three variables in YAML format:**
 
-`dlFolder` - filesystem path to download folder, where will be downloaded all tracks,
+`dlFolder` - filesystem path to download folder, where will be downloaded all tracks.
+By default, your audios are being downloaded to your home directory
 
 `itunesPlaylist` - name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
+ By default, your audios are **not** being added to iTunes
 
 Example:
 ```

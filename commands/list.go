@@ -44,5 +44,5 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 }
 
 func listGetTracks(offset uint) ([]track.Track, error) {
-	return client.Audios(limit, offset, config.GetToken())
+	return client.Audios(limit, offset, config.Get("token"))
 }

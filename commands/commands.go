@@ -5,9 +5,14 @@
 package commands
 
 import (
+	"os"
 	"runtime"
+	"strings"
 
+	"github.com/bogem/vnehm/applescript"
 	"github.com/bogem/vnehm/config"
+	"github.com/bogem/vnehm/ui"
+	"github.com/bogem/vnehm/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -45,6 +50,35 @@ func addOffsetFlag(cmd *cobra.Command) {
 	cmd.Flags().UintVarP(&offset, "offset", "o", 0, "offset relative to first like")
 }
 
+// initializeConfig initializes a config with flags.
+func initializeConfig(cmd *cobra.Command) {
+	err := config.ReadInConfig()
+	if err == config.ErrNotExist {
+		ui.Warning("There is no config file. Read README to configure vnehm")
+	} else if err != nil {
+		ui.Term("", err)
+	}
+	checkToken()
+
+	loadDefaultSettings()
+
+	initializeDlFolder(cmd)
+	if runtime.GOOS == "darwin" {
+		initializeItunesPlaylist(cmd)
+	}
+}
+
+func checkToken() {
+	if config.Get("token") == "" {
+		ui.Term("You aren't authorized. Please execute `vnehm auth` command to authorize", nil)
+	}
+}
+
+func loadDefaultSettings() {
+	config.SetDefault("dlFolder", os.Getenv("HOME"))
+	config.SetDefault("itunesPlaylist", "")
+}
+
 func flagChanged(fs *pflag.FlagSet, key string) bool {
 	flag := fs.Lookup(key)
 	if flag == nil {
@@ -53,12 +87,36 @@ func flagChanged(fs *pflag.FlagSet, key string) bool {
 	return flag.Changed
 }
 
-// initializeConfig initializes a config file with sensible default configuration flags.
-func initializeConfig(cmd *cobra.Command) {
+// initializeDlFolder initializes dlFolder value. If there is no dlFolder
+// set up, then dlFolder is set to HOME env variable.
+func initializeDlFolder(cmd *cobra.Command) {
+	var df string
 	if flagChanged(cmd.Flags(), "dlFolder") {
-		config.Set("dlFolder", dlFolder)
+		df = dlFolder
+	} else {
+		df = config.Get("dlFolder")
 	}
+	config.Set("dlFolder", util.SanitizePath(df))
+}
+
+// initializeItunesPlaylist initializes itunesPlaylist value. If there is no
+// itunesPlaylist set up, then itunesPlaylist set up to blank string. Blank
+// string is the sign, what tracks should not to be added to iTunes.
+func initializeItunesPlaylist(cmd *cobra.Command) {
+	var playlist string
 	if flagChanged(cmd.Flags(), "itunesPlaylist") {
-		config.Set("itunesPlaylist", itunesPlaylist)
+		playlist = itunesPlaylist
+	} else {
+		playlist = config.Get("itunesPlaylist")
 	}
+	if playlist != "" {
+		playlistsList, err := applescript.ListOfPlaylists()
+		if err != nil {
+			ui.Term("Couldn't get list of playlists", err)
+		}
+		if !strings.Contains(playlistsList, playlist) {
+			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+		}
+	}
+	config.Set("itunesPlaylist", playlist)
 }

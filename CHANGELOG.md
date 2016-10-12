@@ -1,5 +1,12 @@
 # vnehm change log
 
+## 2.1
+* If you didn't set dlFolder, `vnehm` will download tracks to home directory implicitly
+* If you didn't set itunesPlaylist, `vnehm` will not add tracks to iTunes implicitly
+* If there is any error in config, you will be notified before the showing of
+tracks menu
+* Minor performance improvements
+
 # 2.0
 * **Rewritten in Go: faster, less memory usage, more stable, easier to install (no need to install `Taglib`)**
 * `vnehm` is now only on English language

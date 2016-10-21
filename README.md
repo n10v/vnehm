@@ -54,7 +54,7 @@ itunesPlaylist: iPod
 
 * **Execute `vnehm auth` to authorize**
 
-Don't worry if you become the message, what you mustn't copy the link from address bar. This app is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which have vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.
+Don't worry if you become the message, what you mustn't copy the link from address bar. vnehm is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which has vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.
 
 ## Usage Examples
 

@@ -18,7 +18,7 @@ var (
 	authCommand = &cobra.Command{
 		Use:     "auth",
 		Short:   "authorize in vnehm with your VK profile",
-		Long:    "This command lets you authorize in vnehm with your VK profile. Without authorization vnehm won't work. Follow the instructions by execution of command.\n\nDon't worry if you become the message, what you mustn't copy the link from address bar. This app is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which have vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.",
+		Long:    "This command lets you authorize in vnehm with your VK profile. Without authorization vnehm won't work. Follow the instructions by execution of command.\n\nDon't worry if you become the message, what you mustn't copy the link from address bar. vnehm is only downloading and searching audios and it hasn't got any permissions to access your private data like messages, friends and etc. All permissions, which has vnehm, is access to audios. You can see it, when you authorize in your browser with the link, what give you vnehm for authorizing.",
 		Aliases: []string{"a"},
 		Run:     authenticate,
 	}

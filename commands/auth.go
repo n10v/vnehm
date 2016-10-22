@@ -53,7 +53,5 @@ func getToken(uri string) string {
 }
 
 func invalidURLMessage() {
-	ui.Error("You've entered invalind URL!", nil)
-	ui.Error("Please execute `auth` command one more time and check input data.", nil)
-	ui.Term("If you can't solve this problem, please write an issue on GitHub page: https://github.com/bogem/vnehm", nil)
+	ui.Term("you've entered invalind URL!\nPlease execute `auth` command one more time and check input data\nIf you can't solve this problem, please write an issue on GitHub page: https://github.com/bogem/vnehm", nil)
 }

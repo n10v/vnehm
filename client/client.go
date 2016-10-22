@@ -56,7 +56,7 @@ func Audios(count, offset uint, token string) ([]track.Track, error) {
 
 		resp := new(responseObject)
 		if err := json.Unmarshal(bAudios, &resp); err != nil {
-			ui.Term("Could't unmarshal JSON with likes", err)
+			ui.Term("could't unmarshal JSON with likes", err)
 		}
 		tracks = append(tracks, resp.Response.Tracks...)
 	}
@@ -78,7 +78,7 @@ func Search(limit, offset uint, query, token string) ([]track.Track, error) {
 
 	resp := new(responseObject)
 	if err := json.Unmarshal(bFound, &resp); err != nil {
-		ui.Term("Couldn't unmarshal JSON with search results", err)
+		ui.Term("couldn't unmarshal JSON with search results", err)
 	}
 
 	return resp.Response.Tracks, nil

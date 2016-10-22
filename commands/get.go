@@ -49,7 +49,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 			handleError(err)
 		}
 	} else {
-		ui.Term("You've entered invalid argument. Run 'vnehm get --help' for usage.", nil)
+		ui.Term("you've entered invalid argument. Run 'vnehm get --help' for usage.", nil)
 	}
 
 	tp.ProcessAll(downloadTracks)
@@ -62,8 +62,8 @@ func getLastTracks(count uint) ([]track.Track, error) {
 func handleError(err error) {
 	switch {
 	case strings.Contains(err.Error(), "403"):
-		ui.Term("You're not allowed to see these tracks", nil)
+		ui.Term("you're not allowed to see these tracks", nil)
 	case strings.Contains(err.Error(), "404"):
-		ui.Term("There are no tracks", nil)
+		ui.Term("there are no tracks", nil)
 	}
 }

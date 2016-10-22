@@ -54,7 +54,7 @@ func addOffsetFlag(cmd *cobra.Command) {
 func initializeConfig(cmd *cobra.Command) {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
-		ui.Warning("There is no config file. Read README to configure vnehm")
+		ui.Warning("there is no config file. Read README to configure vnehm")
 	} else if err != nil {
 		ui.Term("", err)
 	}
@@ -70,7 +70,7 @@ func initializeConfig(cmd *cobra.Command) {
 
 func checkToken() {
 	if config.Get("token") == "" {
-		ui.Term("You aren't authorized. Please execute `vnehm auth` command to authorize", nil)
+		ui.Term("you aren't authorized. Please execute `vnehm auth` command to authorize", nil)
 	}
 }
 
@@ -120,10 +120,10 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 	if playlist != "" {
 		playlistsList, err := applescript.ListOfPlaylists()
 		if err != nil {
-			ui.Term("Couldn't get list of playlists", err)
+			ui.Term("couldn't get list of playlists", err)
 		}
 		if !strings.Contains(playlistsList, playlist) {
-			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+			ui.Term("playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
 		}
 	}
 

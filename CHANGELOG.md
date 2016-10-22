@@ -5,7 +5,7 @@
 * Add "ERROR: " and "WARNING: " prefixes for errors and warnings respectively
 * Show warnings in cases, if you didn't set dlFolder and itunesPlaylist
 * vnehm will not colorize messages, if output isn't STDOUT
-* Minor performance, stability and binary size improvements
+* Minor performance and stability improvements
 
 ## 2.1
 * If you didn't set dlFolder, `vnehm` will download tracks to home directory implicitly

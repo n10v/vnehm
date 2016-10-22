@@ -18,7 +18,7 @@ import (
 
 var (
 	getCommand = &cobra.Command{
-		Use:     "get ([number] or [url])",
+		Use:     "get [number or url]",
 		Short:   "download inputed count of likes (and add to your iTunes library)",
 		Aliases: []string{"g"},
 		Run:     getTracks,

@@ -91,11 +91,17 @@ func flagChanged(fs *pflag.FlagSet, key string) bool {
 // set up, then dlFolder is set to HOME env variable.
 func initializeDlFolder(cmd *cobra.Command) {
 	var df string
+
 	if flagChanged(cmd.Flags(), "dlFolder") {
 		df = dlFolder
 	} else {
 		df = config.Get("dlFolder")
 	}
+
+	if df == "" {
+		df = os.Getenv("HOME")
+	}
+
 	config.Set("dlFolder", util.SanitizePath(df))
 }
 
@@ -104,11 +110,13 @@ func initializeDlFolder(cmd *cobra.Command) {
 // string is the sign, what tracks should not to be added to iTunes.
 func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
+
 	if flagChanged(cmd.Flags(), "itunesPlaylist") {
 		playlist = itunesPlaylist
 	} else {
 		playlist = config.Get("itunesPlaylist")
 	}
+
 	if playlist != "" {
 		playlistsList, err := applescript.ListOfPlaylists()
 		if err != nil {
@@ -118,5 +126,6 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
 		}
 	}
+
 	config.Set("itunesPlaylist", playlist)
 }

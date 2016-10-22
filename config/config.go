@@ -8,6 +8,7 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -48,17 +49,17 @@ func ReadInConfig() error {
 		return ErrNotExist
 	}
 	if err != nil {
-		return errors.New("couldn't open the config file: " + err.Error())
+		return fmt.Errorf("couldn't open the config file: %v", err)
 	}
 	defer configFile.Close()
 
 	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
-		return errors.New("couldn't read the config file: " + err.Error())
+		return fmt.Errorf("couldn't read the config file: %v", err)
 	}
 
 	if err := yaml.Unmarshal(configData, config); err != nil {
-		return errors.New("couldn't unmarshal the config file: " + err.Error())
+		return fmt.Errorf("couldn't unmarshal the config file: %v", err)
 	}
 
 	return nil
@@ -82,12 +83,12 @@ func Write(key, value string) error {
 	if os.IsNotExist(err) {
 		configFile, err = os.Create(configPath)
 		if err != nil {
-			return errors.New("couldn't create the config file: " + err.Error())
+			return fmt.Errorf("couldn't create the config file: %v", err)
 		}
 		err = nil
 	}
 	if err != nil {
-		return errors.New("couldn't open the config file: " + err.Error())
+		return fmt.Errorf("couldn't open the config file: %v", err)
 	}
 	defer configFile.Close()
 
@@ -97,12 +98,12 @@ func Write(key, value string) error {
 
 	configBytes, err := yaml.Marshal(config)
 	if err != nil {
-		return errors.New("coudn't marshal the config map: " + err.Error())
+		return fmt.Errorf("coudn't marshal the config map: %v", err)
 	}
 
 	_, err = configFile.Write(configBytes)
 	if err != nil {
-		return errors.New("couldn't write to the config file: " + err.Error())
+		return fmt.Errorf("couldn't write to the config file: %v", err)
 	}
 	return nil
 }

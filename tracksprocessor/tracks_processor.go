@@ -5,7 +5,7 @@
 package tracksprocessor
 
 import (
-	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -51,22 +51,22 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.Create(trackPath); err != nil {
-		return errors.New("couldn't create track file: " + err.Error())
+		return fmt.Errorf("couldn't create track file: %v", err)
 	}
 	if err := downloadTrack(t, trackPath); err != nil {
-		return errors.New("couldn't download track: " + err.Error())
+		return fmt.Errorf("couldn't download track: %v", err)
 	}
 
 	// Tag track
 	if err := tag(t, trackPath); err != nil {
-		return errors.New("coudln't tag file: " + err.Error())
+		return fmt.Errorf("coudln't tag file: %v", err)
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
 		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
-			return errors.New("couldn't add track to playlist: " + err.Error())
+			return fmt.Errorf("couldn't add track to playlist: %v", err)
 		}
 	}
 	return nil

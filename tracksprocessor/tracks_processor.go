@@ -51,22 +51,22 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.Create(trackPath); err != nil {
-		return errors.New("Couldn't create track file: " + err.Error())
+		return errors.New("couldn't create track file: " + err.Error())
 	}
 	if err := downloadTrack(t, trackPath); err != nil {
-		return errors.New("Couldn't download track: " + err.Error())
+		return errors.New("couldn't download track: " + err.Error())
 	}
 
 	// Tag track
 	if err := tag(t, trackPath); err != nil {
-		return errors.New("Coudln't tag file: " + err.Error())
+		return errors.New("coudln't tag file: " + err.Error())
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
 		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
-			return errors.New("Couldn't add track to playlist: " + err.Error())
+			return errors.New("couldn't add track to playlist: " + err.Error())
 		}
 	}
 	return nil

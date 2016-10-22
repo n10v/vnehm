@@ -8,7 +8,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 
 	"github.com/bogem/id3v2"
 	"github.com/bogem/vnehm/applescript"
@@ -49,7 +49,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
-	trackPath := path.Join(tp.DownloadFolder, t.Filename())
+	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.Create(trackPath); err != nil {
 		return errors.New("Couldn't create track file: " + err.Error())
 	}

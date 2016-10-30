@@ -71,7 +71,7 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	var err error
 	if err = tag(t, trackPath); err != nil {
 		// Don't return error immediately, because it isn't important reason
-		// to prevent proccesing the track further.
+		// to prevent the processing of track further.
 		err = fmt.Errorf("coudln't tag file: %v", err)
 	}
 

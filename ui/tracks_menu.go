@@ -28,7 +28,7 @@ type TracksMenu struct {
 }
 
 // Show gets tracks from GetTracks function, show these tracks,
-// adds selected to TracksMenu.selected and returns them.
+// adds returns selected.
 func (tm TracksMenu) Show() []track.Track {
 	Println("Getting information about tracks")
 	tracks, err := tm.GetTracks(tm.Offset)
@@ -72,6 +72,8 @@ func handleError(err error) {
 		Error("you're not allowed to see these tracks", nil)
 	case strings.Contains(err.Error(), "404"):
 		Error("there are no tracks", nil)
+	default:
+		Error("", err)
 	}
 }
 

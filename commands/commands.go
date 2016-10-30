@@ -63,9 +63,7 @@ func initializeConfig(cmd *cobra.Command) {
 	loadDefaultSettings()
 
 	initializeDlFolder(cmd)
-	if runtime.GOOS == "darwin" {
-		initializeItunesPlaylist(cmd)
-	}
+	initializeItunesPlaylist(cmd)
 }
 
 func checkToken() {
@@ -109,6 +107,8 @@ func initializeDlFolder(cmd *cobra.Command) {
 // initializeItunesPlaylist initializes itunesPlaylist value. If there is no
 // itunesPlaylist set up, then itunesPlaylist set up to blank string. Blank
 // string is the sign, what tracks should not to be added to iTunes.
+//
+// initializeItunesPlaylist sets blank string to config, if OS is darwin
 func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
 

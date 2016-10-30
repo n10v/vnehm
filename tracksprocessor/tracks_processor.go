@@ -60,26 +60,30 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
-	if _, err := os.Create(trackPath); err != nil {
-		return fmt.Errorf("couldn't create track file: %v", err)
+	if _, e := os.Create(trackPath); e != nil {
+		return fmt.Errorf("couldn't create track file: %v", e)
 	}
-	if err := downloadTrack(t, trackPath); err != nil {
-		return fmt.Errorf("couldn't download track: %v", err)
+	if e := downloadTrack(t, trackPath); e != nil {
+		return fmt.Errorf("couldn't download track: %v", e)
 	}
 
 	// Tag track
-	if err := tag(t, trackPath); err != nil {
-		return fmt.Errorf("coudln't tag file: %v", err)
+	var err error
+	if err = tag(t, trackPath); err != nil {
+		// Don't return error immediately, because it isn't important reason
+		// to prevent proccesing the track further.
+		err = fmt.Errorf("coudln't tag file: %v", err)
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
-		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
-			return fmt.Errorf("couldn't add track to playlist: %v", err)
+		if e := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); e != nil {
+			return fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
 	}
-	return nil
+
+	return err
 }
 
 func downloadTrack(t track.Track, path string) error {

@@ -16,11 +16,11 @@ type Track struct {
 	title  string
 
 	// Properties needed for JSON unmarshalling
-	JArtist   string  `json:"artist"`
-	JDuration float64 `json:"duration"`
-	JID       float64 `json:"id"`
-	JTitle    string  `json:"title"`
-	JURL      string  `json:"url"`
+	JArtist   string
+	JDuration int64
+	JID       int64
+	JTitle    string
+	JURL      string
 }
 
 func (t *Track) Artist() string {
@@ -51,7 +51,7 @@ func (t Track) Fullname() string {
 	return t.Artist() + " – " + t.Title()
 }
 
-func (t Track) ID() float64 {
+func (t Track) ID() int64 {
 	return t.JID
 }
 

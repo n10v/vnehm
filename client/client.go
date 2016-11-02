@@ -5,25 +5,36 @@
 package client
 
 import (
-	"encoding/json"
 	"math"
 	"net/url"
 	"strconv"
 
 	"github.com/bogem/vnehm/track"
-	"github.com/bogem/vnehm/ui"
+	"github.com/tidwall/gjson"
 )
 
 const (
-	tracksLimit = 150
+	tracksLimit = 5000 // vk count argument limit
 )
 
-type responseObject struct {
-	Response response `json:"response"`
+// convRS2TS converts an array of gjson.Result to track.Track array.
+func convRS2TS(results []gjson.Result) []track.Track {
+	tracks := make([]track.Track, 0, len(results))
+	for _, r := range results {
+		tracks = append(tracks, convR2T(r))
+	}
+	return tracks
 }
 
-type response struct {
-	Tracks []track.Track `json:"items"`
+// convR2T converts a single gjson.Result to single track.Track object.
+func convR2T(result gjson.Result) track.Track {
+	return track.Track{
+		JArtist:   result.Get("artist").String(),
+		JDuration: result.Get("duration").Int(),
+		JID:       result.Get("id").Int(),
+		JTitle:    result.Get("title").String(),
+		JURL:      result.Get("url").String(),
+	}
 }
 
 func Audios(count, offset uint, token string) ([]track.Track, error) {
@@ -44,9 +55,9 @@ func Audios(count, offset uint, token string) ([]track.Track, error) {
 		params.Set("count", strconv.Itoa(int(limit)))
 		params.Set("offset", strconv.Itoa(int((i*tracksLimit)+offset)))
 		params.Set("access_token", token)
-		params.Set("v", "5.57")
+		params.Set("v", "5.60")
 
-		bAudios, err := getTracks(params)
+		jsonAudios, err := getTracks(params)
 		if err == ErrNotFound {
 			break
 		}
@@ -54,12 +65,10 @@ func Audios(count, offset uint, token string) ([]track.Track, error) {
 			return nil, err
 		}
 
-		resp := new(responseObject)
-		if err := json.Unmarshal(bAudios, &resp); err != nil {
-			ui.Term("could't unmarshal JSON with likes", err)
-		}
-		tracks = append(tracks, resp.Response.Tracks...)
+		trackResults := gjson.Get(string(jsonAudios), "response.items").Array()
+		tracks = append(tracks, convRS2TS(trackResults)...)
 	}
+
 	return tracks, nil
 }
 
@@ -69,19 +78,15 @@ func Search(limit, offset uint, query, token string) ([]track.Track, error) {
 	params.Set("count", strconv.Itoa(int(limit)))
 	params.Set("offset", strconv.Itoa(int(offset)))
 	params.Set("access_token", token)
-	params.Set("v", "5.57")
+	params.Set("v", "5.60")
 
-	bFound, err := search(params)
+	jsonFound, err := search(params)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := new(responseObject)
-	if err := json.Unmarshal(bFound, &resp); err != nil {
-		ui.Term("couldn't unmarshal JSON with search results", err)
-	}
-
-	return resp.Response.Tracks, nil
+	trackResults := gjson.Get(string(jsonFound), "response.items").Array()
+	return convRS2TS(trackResults), nil
 }
 
 const clientID = "5144754"
@@ -93,6 +98,6 @@ func AuthURL() string {
 	params.Set("display", "page")
 	params.Set("scope", "audio,offline")
 	params.Set("response_type", "token")
-	params.Set("v", "5.57")
+	params.Set("v", "5.60")
 	return "https://oauth.vk.com/authorize?" + params.Encode()
 }

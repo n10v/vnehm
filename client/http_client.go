@@ -5,7 +5,6 @@
 package client
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"net/url"
@@ -19,8 +18,6 @@ const apiURL = "https://api.vk.com/method"
 var (
 	ErrForbidden = errors.New("403 - Forbidden")
 	ErrNotFound  = errors.New("404 - Not Found")
-
-	uriBuffer = new(bytes.Buffer)
 )
 
 func getTracks(params url.Values) ([]byte, error) {
@@ -29,9 +26,7 @@ func getTracks(params url.Values) ([]byte, error) {
 }
 
 func formTracksURI(params url.Values) string {
-	uriBuffer.Reset()
-	fmt.Fprint(uriBuffer, apiURL+"/audio.get?"+params.Encode())
-	return uriBuffer.String()
+	return apiURL + "/audio.get?" + params.Encode()
 }
 
 func search(params url.Values) ([]byte, error) {
@@ -40,9 +35,7 @@ func search(params url.Values) ([]byte, error) {
 }
 
 func formSearchURI(params url.Values) string {
-	uriBuffer.Reset()
-	fmt.Fprint(uriBuffer, apiURL+"/audio.search?"+params.Encode())
-	return uriBuffer.String()
+	return apiURL + "/audio.search?" + params.Encode()
 }
 
 func get(uri string) ([]byte, error) {

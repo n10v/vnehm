@@ -65,7 +65,7 @@ func Audios(count, offset uint, token string) ([]track.Track, error) {
 			return nil, err
 		}
 
-		trackResults := gjson.Get(string(jsonAudios), "response.items").Array()
+		trackResults := gjson.GetBytes(jsonAudios, "response.items").Array()
 		tracks = append(tracks, convRS2TS(trackResults)...)
 	}
 
@@ -85,7 +85,7 @@ func Search(limit, offset uint, query, token string) ([]track.Track, error) {
 		return nil, err
 	}
 
-	trackResults := gjson.Get(string(jsonFound), "response.items").Array()
+	trackResults := gjson.GetBytes(jsonFound, "response.items").Array()
 	return convRS2TS(trackResults), nil
 }
 
@@ -100,4 +100,25 @@ func AuthURL() string {
 	params.Set("response_type", "token")
 	params.Set("v", "5.60")
 	return "https://oauth.vk.com/authorize?" + params.Encode()
+}
+
+func WallAudios(id, token string) ([]track.Track, error) {
+	params := url.Values{}
+	params.Set("posts", id)
+	params.Set("access_token", token)
+	params.Set("v", "5.60")
+
+	jsonWallAudios, err := wallAudios(params)
+	if err != nil {
+		return nil, err
+	}
+
+	var trackResults []gjson.Result
+	attachmentsResults := gjson.GetBytes(jsonWallAudios, `response.#.attachments`)
+	for _, r := range attachmentsResults.Array()[0].Array() { // it's so ugly!
+		if r.Get("type").String() == "audio" {
+			trackResults = append(trackResults, r.Get("audio"))
+		}
+	}
+	return convRS2TS(trackResults), nil
 }

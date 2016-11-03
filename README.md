@@ -78,9 +78,14 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 
 	$ vnehm get -o 1 -i ''
 
+#### Download audios from the post
+
+	$ vnehm get https://vk.com/wall20942729_1722
+
 #### Search for audios and download them
 
 	$ vnehm search nasa
+
 
 ## FAQ
 

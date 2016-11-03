@@ -38,6 +38,15 @@ func formSearchURI(params url.Values) string {
 	return apiURL + "/audio.search?" + params.Encode()
 }
 
+func wallAudios(params url.Values) ([]byte, error) {
+	uri := formWallAudiosURI(params)
+	return get(uri)
+}
+
+func formWallAudiosURI(params url.Values) string {
+	return apiURL + "/wall.getById?" + params.Encode()
+}
+
 func get(uri string) ([]byte, error) {
 	statusCode, body, err := fasthttp.Get(nil, uri)
 	if err != nil {

@@ -19,7 +19,7 @@ import (
 var (
 	getCommand = &cobra.Command{
 		Use:     "get [number or url]",
-		Short:   "download inputed count of likes (and add to your iTunes library)",
+		Short:   "download inputed count of likes or audios from the wall post (and add to your iTunes library)",
 		Aliases: []string{"g"},
 		Run:     getTracks,
 	}
@@ -43,16 +43,33 @@ func getTracks(cmd *cobra.Command, args []string) {
 	}
 
 	var downloadTracks []track.Track
-	if num, err := strconv.Atoi(arg); err == nil {
+	var err error
+	if isVKWallURL(arg) {
+		downloadTracks, err = getTracksFromVKWall(arg)
+	} else if num, err := strconv.Atoi(arg); err == nil {
 		downloadTracks, err = getLastTracks(uint(num))
-		if err != nil {
-			handleError(err)
-		}
 	} else {
 		ui.Term("you've entered invalid argument. Run 'vnehm get --help' for usage.", nil)
 	}
 
+	if err != nil {
+		handleError(err)
+	}
+
 	tp.ProcessAll(downloadTracks)
+}
+
+func isVKWallURL(uri string) bool {
+	return strings.Contains(uri, "vk.com/wall")
+}
+
+// getTracksFromVKWall returns an id of post. It knows, what uri is
+// correct VK link to post.
+func getTracksFromVKWall(uri string) ([]track.Track, error) {
+	ui.Println("Downloading audio(s) from the post")
+	index := strings.Index(uri, "wall")
+	postID := uri[index+len("wall"):]
+	return client.WallAudios(postID, config.Get("token"))
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {

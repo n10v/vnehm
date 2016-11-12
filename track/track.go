@@ -60,8 +60,8 @@ func (t Track) ID() int64 {
 // E.g. if track has title "Michael Jackson - Thriller" then this function will
 // return as first string "Michael Jackson" and as second string "Thriller".
 func (t Track) name() (string, string) {
-	artist := t.JArtist
-	title := t.JTitle
+	artist := html.UnescapeString(strings.TrimSpace(t.JArtist))
+	title := html.UnescapeString(strings.TrimSpace(t.JTitle))
 	separators := [...]string{" - ", " ~ ", " – "}
 	for _, sep := range separators {
 		if strings.Contains(t.JTitle, sep) {
@@ -70,7 +70,7 @@ func (t Track) name() (string, string) {
 			title = splitted[1]
 		}
 	}
-	return html.UnescapeString(artist), html.UnescapeString(title)
+	return artist, title
 }
 
 func (t *Track) Title() string {

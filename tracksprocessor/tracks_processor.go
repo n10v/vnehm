@@ -105,8 +105,12 @@ func tag(t track.Track, trackPath string) error {
 	}
 	defer tag.Close()
 
+	// If there are already frames in tag, do nothing
+	if tag.Count() > 0 {
+		return nil
+	}
+
 	tag.SetArtist(t.Artist())
 	tag.SetTitle(t.Title())
-
 	return tag.Save()
 }

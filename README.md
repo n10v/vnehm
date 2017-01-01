@@ -1,3 +1,5 @@
+# Project is frozen because of blocked access to VK audios via API
+
 <div align="center">
 <h1>vnehm</h1>
 <p><b><i>vnehm</i></b> is a console tool, which downloads and adds to your iTunes library (if you use macOS) your <b>VK</b> audios in convenient way.</p>

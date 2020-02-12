@@ -1,4 +1,4 @@
-# Project is frozen because of blocked access to VK audios via API
+# Project is deprected because VK blocked access to audios via API
 
 <div align="center">
 <h1>vnehm</h1>
